@@ -24,6 +24,25 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/systemChatView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="40dp"
+        android:background="@drawable/rounded_corner"
+        android:backgroundTint="#E5132C"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/systemChatText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/baseline_warning"
+            android:drawablePadding="10dp"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/userChatView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

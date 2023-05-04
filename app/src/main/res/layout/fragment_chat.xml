@@ -36,7 +36,7 @@
             android:ems="10"
             android:inputType="text"
             android:padding="16dp"
-            android:text="@string/chat_text_box_hint"
+            android:hint="@string/chat_text_box_hint"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/buttonSend"
             app:layout_constraintHorizontal_bias="0.5"
