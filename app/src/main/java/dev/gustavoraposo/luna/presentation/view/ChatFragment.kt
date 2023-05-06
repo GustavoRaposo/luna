@@ -1,21 +1,24 @@
 package dev.gustavoraposo.luna.presentation.view
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.view.KeyEvent
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.liveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dev.gustavoraposo.luna.R
 import dev.gustavoraposo.luna.domain.model.ChatMessage
 import dev.gustavoraposo.luna.domain.model.ChatMessageSentBy
+import dev.gustavoraposo.luna.domain.usecase.GetAnswerUseCase
 import dev.gustavoraposo.luna.presentation.adapter.ChatMessageListAdapter
 import dev.gustavoraposo.luna.presentation.viewmodel.ChatViewModel
 
@@ -49,6 +52,10 @@ class ChatFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(ChatViewModel::class.java)
 
+        viewModel.chatGPTResponse.observe(viewLifecycleOwner, Observer {
+            addToChat(it.text, it.sentBy)
+        })
+
         messageList = mutableListOf(
             ChatMessage("Olá, eu sou a Luna, como posso te ajudar?", ChatMessageSentBy.BOT)
         )
@@ -60,20 +67,14 @@ class ChatFragment : Fragment() {
         recyclerView.layoutManager = linearLayoutManager
 
         editText.setOnKeyListener { view, i, keyEvent ->
-            if((keyEvent.action == KeyEvent.ACTION_DOWN) &&
-                (i == KeyEvent.KEYCODE_ENTER)){
-                addToChat(editText.text.toString().trim(), ChatMessageSentBy.USER)
-                editText.text.clear()
+            if(checkEnterKey(keyEvent, i)){
+                onEnterPressed()
                 return@setOnKeyListener true
             }
             false
         }
-
-
         sendButton.setOnClickListener(View.OnClickListener {
-            addToChat(editText.text.toString().trim(), ChatMessageSentBy.USER)
-            editText.text.clear()
-            // TODO: send to gpt3
+            onEnterPressed()
         })
         listenButton.setOnClickListener(View.OnClickListener {
             Toast.makeText(context, "listen", Toast.LENGTH_LONG)
@@ -81,13 +82,35 @@ class ChatFragment : Fragment() {
         })
     }
 
-    private fun addToChat(message: String, sentBy: ChatMessageSentBy){
-        if(message.isNotEmpty())
+    private fun checkEnterKey(keyEvent: KeyEvent, keyCode: Int) =
+        (keyEvent.action == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)
+
+    private fun onEnterPressed(){
+        val text = editText.text.toString().trim()
+        addToChat(text, ChatMessageSentBy.USER)
+        viewModel.getAnswer(text)
+        editText.text.clear()
+    }
+
+    private fun addToChat(message: String, sentBy: ChatMessageSentBy) {
+        if (message.isNotEmpty())
             activity?.runOnUiThread(Runnable {
                 messageList.add(ChatMessage(message, sentBy))
                 chatMessageListAdapter.notifyDataSetChanged()
                 recyclerView.smoothScrollToPosition(chatMessageListAdapter.itemCount)
             })
+    }
+
+    private fun sendAnswer(text: String){
+        val getAnswerUseCase = GetAnswerUseCase()
+        val responseLiveData = liveData {
+            val response = getAnswerUseCase.invoke(text)
+            emit(response)
+        }
+        responseLiveData.observe(viewLifecycleOwner, Observer {
+            val message = it
+            addToChat(message.text, message.sentBy)
+        })
     }
 
 }
