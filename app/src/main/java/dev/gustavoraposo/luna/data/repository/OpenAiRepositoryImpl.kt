@@ -12,7 +12,7 @@ class OpenAiRepositoryImpl() : OpenAiRepository {
         val apiService = retrofitClient.create(OpenAiApi::class.java)
         return apiService.getAnswer(
             contentType = "application/json",
-            apiKey = "Bearer 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",
+            apiKey = "Bearer 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",
             body = RequestBody(
                 model= "text-davinci-003",
                 prompt = text,
