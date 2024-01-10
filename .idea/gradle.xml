@@ -9,6 +9,8 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/STT" />
+            <option value="$PROJECT_DIR$/TTS" />
             <option value="$PROJECT_DIR$/app" />
           </set>
         </option>
