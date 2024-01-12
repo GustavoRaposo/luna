@@ -12,6 +12,7 @@ import kotlinx.coroutines.launch
 class ChatViewModel : ViewModel() {
     private val getAnswerUseCase = GetAnswerUseCase()
     private val _chatGPTResponse = MutableLiveData<ChatMessage>()
+
     val chatGPTResponse: LiveData<ChatMessage>
         get() = _chatGPTResponse
 

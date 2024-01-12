@@ -34,7 +34,7 @@ class ChatFragment : Fragment() {
     private lateinit var sendButton: ImageButton
     private lateinit var listenButton: ImageButton
     private lateinit var chatMessageListAdapter: ChatMessageListAdapter
-    private lateinit var messageList: MutableList<ChatMessage>
+    private var messageList: MutableList<ChatMessage> = mutableListOf(ChatMessage("Olá, eu sou a Luna, como posso te ajudar?", ChatMessageSentBy.BOT))
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,10 +55,6 @@ class ChatFragment : Fragment() {
         viewModel.chatGPTResponse.observe(viewLifecycleOwner, Observer {
             addToChat(it.text, it.sentBy)
         })
-
-        messageList = mutableListOf(
-            ChatMessage("Olá, eu sou a Luna, como posso te ajudar?", ChatMessageSentBy.BOT)
-        )
 
         chatMessageListAdapter = ChatMessageListAdapter(context, messageList)
         recyclerView.adapter = chatMessageListAdapter
