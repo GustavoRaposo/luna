@@ -2,4 +2,9 @@
     <string name="app_name">Luna</string>
     <string name="chat_text_box_hint">Ask me something</string>
     <string name="chat_button_send">Send</string>
+    <string name="menu_home">Home</string>
+    <string name="menu_chat">Chat</string>
+    <string name="menu_settings">Settings</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

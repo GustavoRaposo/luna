@@ -3,11 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/chatFragment">
+    app:startDestination="@id/speakFragment">
 
     <fragment
         android:id="@+id/chatFragment"
         android:name="dev.gustavoraposo.luna.presentation.view.ChatFragment"
         android:label="fragment_chat"
         tools:layout="@layout/fragment_chat" />
+    <fragment
+        android:id="@+id/speakFragment"
+        android:name="dev.gustavoraposo.luna.presentation.view.SpeakFragment"
+        android:label="fragment_speak"
+        tools:layout="@layout/fragment_speak" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="dev.gustavoraposo.luna.presentation.view.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
 </navigation>

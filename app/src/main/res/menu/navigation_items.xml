@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/speakFragment"
+        android:title="@string/menu_home"
+        android:icon="@drawable/ic_home_filled" />
+    <item android:id="@+id/chatFragment"
+        android:title="@string/menu_chat"
+        android:icon="@drawable/ic_chat_filled" />
+    <item android:id="@+id/settingsFragment"
+        android:title="@string/menu_settings"
+        android:icon="@drawable/ic_settings" />
+</menu>
